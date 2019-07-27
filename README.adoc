@@ -1,0 +1,11 @@
+= ez_plugin
+
+Library for creating a plugin system.
+
+== License
+
+Copyright © 2019 Emil Bengtsson
+
+___
+
+Coram Deo
