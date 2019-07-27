@@ -1,6 +1,6 @@
 = ez-plugin
 
-Library for creating plugins.
+For when you need a plugin system.
 
 == Dependancy
 ```clojure
