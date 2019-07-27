@@ -2,6 +2,11 @@
 
 Library for creating a plugin system.
 
+== Dependancy
+```clojure
+[ez-plugin "0.1.0"]
+```
+
 == Usage
 
 . Library to be loaded as a plugin
