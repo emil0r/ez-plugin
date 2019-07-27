@@ -4,8 +4,17 @@ Library for creating plugins.
 
 == Dependancy
 ```clojure
-[ez-plugin "0.1.0"]
+[ez-plugin "0.1.1"]
 ```
+
+== Rationale
+
+You wish to build a system and allow for third parties to extend the system with
+new functionality. ez-plugin allows for defining hooks to be loaded and executed
+by the system in any JAR file currently loaded on the classpath.
+
+Combine with https://github.com/cemerick/pomegranate[pomegranate] for
+downloading JAR files at runtime.
 
 == Usage
 
@@ -18,12 +27,24 @@ Library for creating plugins.
 ```clojure
 (require '[ez-plugin.core :as plugin])
 (plugin/load-plugins "plugin.edn" {})
+(plugin/load-plugins
+  ;; look for this file in all the JAR files currently loaded
+  "awesome/system/plugin.edn"
+  ;; send in our context map
+  {:version 1 :context-map? true}
+  ;; an optional opt map
+  {;; the EDN file should use this key for holding the hooks. defaults
+   ;; to :hooks
+   :hooks-key :foobar/hooks
+   ;; should any exceptions bubble up or silently supressed
+   ;; defaults to false
+   :bubble? true}})
 ```
 
 The EDN file must look like this. The hooks specified as a vector with the fully qualifed path to the functions you wish to call. The context map is passed as an argument to the function.
 
 ```clojure
-{:ez-plugin/hooks [ez-plugin-test1.core/hook]}
+{:hooks [ez-plugin-test1.core/hook]}
 ```
 
 See in the code base for examples.
