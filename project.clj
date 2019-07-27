@@ -1,4 +1,4 @@
-(defproject ez-plugin "0.1.0-SNAPSHOT"
+(defproject ez-plugin "0.1.0"
 
   :description "Library for creating a plugin system."
 
