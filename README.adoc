@@ -18,8 +18,8 @@ downloading JAR files at runtime.
 
 == Usage
 
-. Library to be loaded as a plugin
-. An EDN file in the file path (for example in resources)
+. Library (loaded as a JAR) to be loaded as a plugin
+. An EDN file in the file path of the JAR (for example in resources)
 .. The EDN file can be named anything
 .. If placed in the root of resources, the path is the file name
 . You run the following code
