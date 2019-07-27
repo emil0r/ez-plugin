@@ -1,1 +1,1 @@
-{:ez-plugin/hooks [ez-plugin-test2.core/hook]}
+{:hooks [ez-plugin-test2.core/hook]}

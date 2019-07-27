@@ -5,4 +5,4 @@
 (deftest a-test
   (testing "Load plugin.edn"
     (is (= [#:ez-plugin-test1.core{:hook :loaded} #:ez-plugin-test2.core{:hook :loaded}]
-           (load-plugins "plugin.edn" {})))))
+           (mapv :loaded (load-plugins "plugin.edn" {}))))))

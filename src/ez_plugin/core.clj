@@ -3,7 +3,6 @@
             [clojure.string :as str])
   (:import [java.util.jar JarFile]))
 
-
 (defn list-jar
   "List the content of a directory for a given JAR file"
   [jar-path inner-dir]
@@ -30,18 +29,23 @@
   Requires a context map.
   Can bubble up exceptions, or silently supress them."
   ([jar-path hook-path context]
-   (load-plugin jar-path hook-path context))
-  ([jar-path hook-path context bubble?]
+   (load-plugin jar-path hook-path context nil))
+  ([jar-path hook-path context {:keys [bubble?
+                                       hooks-key]
+                                :or {bubble?   false
+                                     hooks-key :hooks}}]
    (try
      (if-let [file (read-from-jar jar-path hook-path)]
-       (let [{:keys [:ez-plugin/hooks]} (edn/read-string file)]
+       (let [hooks (get (edn/read-string file) hooks-key)]
          (reduce (fn [out hook]
                    ;; get the namespace from our hook
                    (let [-ns (namespace hook)]
                      ;; require the namespace. this will load everything in the namespace
                      (require (symbol -ns))
                      ;; call the hook with our context map, collect the result to be returned
-                     (conj out ((resolve hook) context))))
+                     (conj out {:loaded ((resolve hook) context)
+                                :jar-path jar-path
+                                :hook-path hook-path})))
                  [] hooks)))
      (catch Exception e
        (if bubble?
@@ -50,14 +54,14 @@
 (defn load-plugins
   "Loads all plugins given a hook-path"
   ([hook-path context]
-   (load-plugins hook-path context false))
-  ([hook-path context bubble?]
+   (load-plugins hook-path context nil))
+  ([hook-path context opts]
    (let [jar-paths (as-> (System/getProperty "java.class.path") $
                      (str/split $ #":")
                      (filter #(str/ends-with? % ".jar") $))]
      (->> jar-paths
           (reduce (fn [out jar-path]
-                    (conj out (load-plugin jar-path hook-path context bubble?)))
+                    (conj out (load-plugin jar-path hook-path context opts)))
                   [])
           (flatten)
           (remove nil?)))))
