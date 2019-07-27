@@ -1,6 +1,32 @@
-= ez_plugin
+= ez-plugin
 
 Library for creating a plugin system.
+
+== Usage
+
+. Library to be loaded as a plugin
+. An EDN file in the file path (for example in resources)
+  . The EDN file can be named anything
+  . If placed in the root of resources, the path is the file name
+. You run the following code
+
+```clojure
+(require '[ez-plugin.core :as plugin])
+(load-plugins "plugin.edn" {})
+```
+
+The EDN file must look like this. The hooks specified as a vector with the fully qualifed path to the functions you wish to call. The context map is passed as an argument to the function.
+
+``clojure
+{:ez-plugin/hooks [ez-plugin-test1.core/hook]}
+```
+
+See in the code base for examples.
+
+== Testing &amp; development
+
+In order to develop the library and to run the tests,
+the two test libraries must first be installed.
 
 == License
 
