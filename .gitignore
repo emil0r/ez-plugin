@@ -8,5 +8,5 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
-.hgignore
-.hg/
+/ez_plugin_test1/target
+/ez_plugin_test2/target
