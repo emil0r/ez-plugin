@@ -22,7 +22,7 @@ Library for creating a plugin system.
 
 The EDN file must look like this. The hooks specified as a vector with the fully qualifed path to the functions you wish to call. The context map is passed as an argument to the function.
 
-``clojure
+```clojure
 {:ez-plugin/hooks [ez-plugin-test1.core/hook]}
 ```
 
